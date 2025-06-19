@@ -1,0 +1,19 @@
+name: run matrix workflow (linux / win)
+
+# Controls when the workflow will run
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  example_matrix:
+    strategy:
+      matrix:
+        version: [10, 12, 14]
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - name: Hello ${{ matrix.os}} ${{ matrix.version }}
+        run: |
+          echo Running on ${{ matrix.os }}
+          echo version: ${{ matrix.version }}
+    
