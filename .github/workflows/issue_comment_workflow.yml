@@ -1,0 +1,33 @@
+name: Comment new issue
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  issues: write
+  pull-requests: write
+  contents: write
+
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@0.8.0
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: "🎉 You've created this issue comment using GitHub Script!!!"
+            })
+      # run a separate script file
+      # - uses: actions/checkout@v2
+      # - uses: actions/github-script@v2
+      #   with:
+      #     script: |
+      #       const path = require('path')
+      #       const scriptPath = path.resolve('./scripts/script.js')
+      #       console.log(require(scriptPath)({context}))
